@@ -1,0 +1,37 @@
+version: 2
+
+sources:
+  - name: raw
+    database: DEMO_ELT
+    schema: RAW
+    tables:
+      - name: customers
+      - name: orders
+      - name: products
+      - name: order_items
+    freshness:
+      warn_after: {count: 1, period: day}
+      error_after: {count: 2, period: day}
+
+models:
+  - name: stg_customers
+    description: "Cleaned staging customers"
+    columns:
+      - name: customer_id
+        description: "Primary key for customers"
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_orders
+    description: "Staged orders"
+    columns:
+      - name: order_id
+        description: "Primary key for orders"
+        tests:
+          - not_null
+          - unique
+      - name: customer_id
+        description: "Foreign key to customers"
+        tests:
+          - not_null

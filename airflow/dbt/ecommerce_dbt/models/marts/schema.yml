@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: fact_sales
+    description: "Fact table capturing sales data at the order item level."
+    columns:
+      - name: order_total
+        description: "Total amount for the order item."
+        tests:
+          - not_null

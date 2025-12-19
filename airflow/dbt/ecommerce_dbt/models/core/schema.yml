@@ -1,0 +1,43 @@
+version: 2
+
+models:
+
+  - name: dim_customers
+    description: "Dimension table containing customer attributes used for analysis."
+    columns:
+      - name: customer_id
+        description: "Unique ID for each customer."
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_products
+    description: "Product dimension with product name, price, and category."
+    columns:
+      - name: product_id
+        description: "Unique ID for each product."
+        tests:
+          - not_null
+          - unique
+
+  - name: fact_order_items
+    description: "Fact table containing transactional details at the order item level."
+    columns:
+      - name: order_item_id
+        description: "Primary key for order items."
+        tests:
+          - not_null
+          - unique
+
+      - name: product_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_products')
+              field: product_id
+
+      - name: customer_id
+        tests:
+          - relationships:
+              to: ref('dim_customers')
+              field: customer_id
