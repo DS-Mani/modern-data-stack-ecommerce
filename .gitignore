@@ -1,0 +1,18 @@
+# Airflow
+airflow/logs/
+airflow/dags/__pycache__/
+airflow/*/logs/
+airflow/*/__pycache__/
+
+# dbt
+ecommerce_dbt/target/
+ecommerce_dbt/logs/
+ecommerce_dbt/dbt_packages/
+
+# Python
+__pycache__/
+*.pyc
+
+# Misc
+.DS_Store
+.env

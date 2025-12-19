@@ -1,0 +1,37 @@
+# Modern Data Platform – Snowflake + dbt + Airflow (Cosmos) + Azure
+
+A fully automated end-to-end data engineering pipeline that ingests raw e-commerce data from Azure Blob Storage into Snowflake, transforms it using dbt, and orchestrates everything with Apache Airflow (Astro + Cosmos).
+
+This project demonstrates:
+- Modern ELT architecture on Snowflake  
+- dbt modeling (staging → intermediate → marts)  
+- Incremental models, snapshots, and SCD logic  
+- Airflow DAG orchestration using Cosmos  
+- Secure role-based access & Snowflake best practices  
+- Production-ready GitHub code structure  
+
+---
+
+## 📌 **Architecture Overview**
+
+The platform follows a clean, layered ELT design.
+
+👉 **Full diagram:** [`architecture/high_level.md`](architecture/high_level.md)
+
+```mermaid
+flowchart LR
+    A[Azure Blob Storage<br>raw CSV files] --> B[Snowflake Stage]
+    B --> C[Snowflake RAW Tables]
+
+    C --> D[dbt Staging Models<br>stg_*]
+    D --> E[dbt Intermediate Models<br>int_*, inc_*]
+    E --> F[dbt Marts<br>dim_*, fact_*]
+
+    F --> G[Analytics / BI Tools]
+
+    subgraph Airflow
+    X[Airflow DAG<br>Cosmos + dbt build]
+    end
+
+    X --> D
+    

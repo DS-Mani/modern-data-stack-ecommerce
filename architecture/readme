@@ -1,0 +1,32 @@
+flowchart LR
+
+subgraph cloud["Azure Cloud"]
+    ABL[Azure Blob Storage\nRaw CSV Files]
+end
+
+subgraph airflow["Apache Airflow"]
+    AF[Airflow DAG\n(Cosmos + dbt)]
+end
+
+subgraph snowflake["Snowflake"]
+    RAW[(RAW Schema)]
+    STAGE[(STAGE Schema)]
+    MART[(MARTS Schema)]
+end
+
+subgraph dbt["dbt Core"]
+    STG[Staging Models]
+    INT[Intermediate Models]
+    FACT_DIM[Fact + Dimension Models]
+    SNAP[Snapshots]
+end
+
+subgraph bi["Analytics Layer"]
+    BI[Power BI / Tableau]
+end
+
+ABL --> AF --> RAW
+RAW -->|dbt run| STG
+STG --> INT --> FACT_DIM --> MART
+FACT_DIM --> SNAP
+MART --> BI
