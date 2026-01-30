@@ -12,13 +12,13 @@ This project demonstrates:
 
 ---
 
-## 📌 **Architecture Overview**
+ 📌 **Architecture Overview**
 
 The platform follows a clean, layered ELT design.
 
 👉 **Full diagram:** [`architecture/high_level.md`](architecture/high_level.md)
 
-```mermaid
+
 flowchart LR
     A[Azure Blob Storage<br>raw CSV files] --> B[Snowflake Stage]
     B --> C[Snowflake RAW Tables]
